@@ -32,7 +32,7 @@ int main()
 
     pthread_create(&thread, NULL, incrementingThreadFunction, NULL);
     pthread_create(&thread, NULL, decrementingThreadFunction, NULL);
-    pthread_join(thread, NULL)
+    pthread_join(thread, NULL);
 
         // TODO:
         // start the two functions as their own threads using `pthread_create`
