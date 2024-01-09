@@ -16,7 +16,8 @@ What is the difference between a *race condition* and a *data race*?
 ### Engineering
 
 Why would we use multiple threads? What kinds of problems do threads solve?
-> *Your answer here*
+> Multiple threads is useful for improving speed for tasks run on multi-core processors. 
+    It is for example possible to separate front-end and back-end code to run on separate threads. This prevents the UI from becoming unresponsive.
 
 Some languages support "fibers" (sometimes called "green threads") or "coroutines"? What are they, and why would we rather use them over threads?
 > *Your answer here*
