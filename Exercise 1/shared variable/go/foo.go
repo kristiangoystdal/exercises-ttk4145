@@ -12,6 +12,7 @@ import (
 var i = 0
 
 func incrementing() {
+	//TODO: increment i 1000000 times
 	for n := 0; n < 1000000; n++ {
 		i += 1
 	}
