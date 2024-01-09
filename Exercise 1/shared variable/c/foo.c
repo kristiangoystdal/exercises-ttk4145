@@ -6,27 +6,45 @@
 
 int i = 0;
 
-// Note the return type: void*
-void* incrementingThreadFunction(){
-    // TODO: increment i 1_000_000 times
+// Mutex is used because we don't need to handle several resources simultaneously.
+// It makes sure several threads do not access or modify the variable at the same time.
+
+pthread_mutex_t lock;
+
+void *incrementingThreadFunction()
+{
+    for (int j = 0; j < 101; j++)
+    {
+        pthread_mutex_lock(&lock);
+        i++;
+        pthread_mutex_unlock(&lock);
+    }
     return NULL;
 }
 
-void* decrementingThreadFunction(){
-    // TODO: decrement i 1_000_000 times
+void *decrementingThreadFunction()
+{
+    for (int j = 0; j < 101; j++)
+    {
+        pthread_mutex_lock(&lock);
+        i--;
+        pthread_mutex_unlock(&lock);
+    }
     return NULL;
 }
 
+int main()
+{
+    pthread_t thread1, thread2;
 
-int main(){
-    // TODO: 
-    // start the two functions as their own threads using `pthread_create`
-    // Hint: search the web! Maybe try "pthread_create example"?
-    
-    // TODO:
-    // wait for the two threads to be done before printing the final result
-    // Hint: Use `pthread_join`    
-    
+    pthread_mutex_init(&lock, NULL);
+
+    pthread_create(&thread1, NULL, incrementingThreadFunction, NULL);
+    pthread_create(&thread2, NULL, decrementingThreadFunction, NULL);
+    pthread_join(thread1, NULL);
+    pthread_join(thread2, NULL);
+    pthread_mutex_destroy(&lock);
+
     printf("The magic number is: %d\n", i);
     return 0;
 }
