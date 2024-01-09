@@ -20,6 +20,10 @@ func incrementing() {
 
 func decrementing() {
 	//TODO: decrement i 1000000 times
+	for n := 0; n < 1000000; n++ {
+		i -= 1
+	}
+	fmt.Println(i)
 }
 
 func main() {
@@ -27,6 +31,8 @@ func main() {
 	runtime.GOMAXPROCS(2)
 
 	// TODO: Spawn both functions as goroutines
+	incrementing()
+	decrementing()
 
 	// We have no direct way to wait for the completion of a goroutine (without additional synchronization of some sort)
 	// We will do it properly with channels soon. For now: Sleep.
