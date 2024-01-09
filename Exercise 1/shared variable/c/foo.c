@@ -5,11 +5,15 @@
 #include <stdio.h>
 
 int i = 0;
+
+// Mutex is used because we don't need to handle several resources simultaneously.
+// It makes sure several threads do not access or modify the variable at the same time.
+
 pthread_mutex_t lock;
 
 void *incrementingThreadFunction()
 {
-    for (int j = 0; j < 1000001; j++)
+    for (int j = 0; j < 101; j++)
     {
         pthread_mutex_lock(&lock);
         i++;
@@ -20,7 +24,7 @@ void *incrementingThreadFunction()
 
 void *decrementingThreadFunction()
 {
-    for (int j = 0; j < 1000001; j++)
+    for (int j = 0; j < 101; j++)
     {
         pthread_mutex_lock(&lock);
         i--;
@@ -31,13 +35,14 @@ void *decrementingThreadFunction()
 
 int main()
 {
-    pthread_t thread;
+    pthread_t thread1, thread2;
 
     pthread_mutex_init(&lock, NULL);
 
-    pthread_create(&thread, NULL, incrementingThreadFunction, NULL);
-    pthread_create(&thread, NULL, decrementingThreadFunction, NULL);
-    pthread_join(thread, NULL);
+    pthread_create(&thread1, NULL, incrementingThreadFunction, NULL);
+    pthread_create(&thread2, NULL, decrementingThreadFunction, NULL);
+    pthread_join(thread1, NULL);
+    pthread_join(thread2, NULL);
     pthread_mutex_destroy(&lock);
 
     printf("The magic number is: %d\n", i);
