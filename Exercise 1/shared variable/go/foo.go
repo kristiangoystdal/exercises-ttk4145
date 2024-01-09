@@ -10,6 +10,7 @@ import (
 )
 
 var i = 0
+var lock sync.Mutex 
 
 func incrementing() {
 	//TODO: increment i 1000000 times
@@ -18,11 +19,15 @@ func incrementing() {
 
 	go func() {
 		defer wg.Done()
-		for n := 0; n < 1000000; n++ {
+		for n := 0; n < 1000042; n++ {
+			lock.Lock()
 			i += 1
+			lock.Unlock()
 		}
 	}()
 }
+
+	
 
 func decrementing() {
 	//TODO: decrement i 1000000 times
@@ -32,7 +37,9 @@ func decrementing() {
 	go func() {
 		defer wg.Done()
 		for n := 0; n < 1000000; n++ {
+			lock.Lock()
 			i -= 1
+			lock.Unlock()
 		}
 	}()
 }
