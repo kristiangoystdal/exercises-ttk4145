@@ -15,11 +15,8 @@ func server(operation chan string) {
 		case op := <-operation:
 			if op == "increment" {
 				i++
-				fmt.Print(i)
 			} else if op == "decrement" {
 				i--
-				fmt.Print(i)
-
 			}
 		default:
 		}
@@ -55,9 +52,6 @@ func main() {
 	// TODO: Spawn both functions as goroutines
 	go incrementing(operation, finish)
 	go decrementing(operation, finish)
-
-	// We have no direct way to wait for the completion of a goroutine (without additional synchronization of some sort)
-	// We will do it properly with channels soon. For now: Sleep.
 
 	<-finish
 	<-finish
