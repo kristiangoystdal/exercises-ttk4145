@@ -30,7 +30,7 @@ func consumer(buffer chan int) {
 func main() {
 
 	// TODO: make a bounded buffer
-	buffer := make(chan int, 10)
+	buffer := make(chan int, 5)
 
 	go consumer(buffer)
 	go producer(buffer)
