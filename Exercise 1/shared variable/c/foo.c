@@ -13,7 +13,7 @@ pthread_mutex_t lock;
 
 void *incrementingThreadFunction()
 {
-    for (int j = 0; j < 101; j++)
+    for (int j = 0; j < 1000000; j++)
     {
         pthread_mutex_lock(&lock);
         i++;
@@ -24,7 +24,7 @@ void *incrementingThreadFunction()
 
 void *decrementingThreadFunction()
 {
-    for (int j = 0; j < 101; j++)
+    for (int j = 0; j < 1000000; j++)
     {
         pthread_mutex_lock(&lock);
         i--;

@@ -25,7 +25,7 @@ func server(operation chan string) {
 
 func incrementing(operation chan string, finish chan bool) {
 	//TODO: increment i 1000000 times
-	for n := 0; n < 1042; n++ {
+	for n := 0; n < 1000000; n++ {
 		operation <- "increment"
 	}
 	finish <- true
@@ -34,7 +34,7 @@ func incrementing(operation chan string, finish chan bool) {
 
 func decrementing(operation chan string, finish chan bool) {
 	//TODO: decrement i 1000000 times
-	for n := 0; n < 1000; n++ {
+	for n := 0; n < 1000000; n++ {
 		operation <- "decrement"
 	}
 	finish <- true
