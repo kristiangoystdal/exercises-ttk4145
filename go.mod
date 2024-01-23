@@ -4,9 +4,3 @@ go 1.23
 
 require Driver-go v0.0.0
 replace Driver-go => ./Exercise_3/driver-go
-
-require Driver-go v0.0.0
-replace Driver-go => ./Exercise_3/driver-go
-
-require Driver-go v0.0.0
-replace Driver-go => ./Exercise_3/driver-go
