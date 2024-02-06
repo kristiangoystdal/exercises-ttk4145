@@ -17,11 +17,14 @@ The process pair mechanism on its own forms one of the three parts of making bug
 Some engineering questions, before you continue:
 
 - Why would we aim to detect success in results, instead of the more classical way of detecting errors/failures?
+
 This approach does not require us to expect and know all failure modes that can be encountered during execution.
 The absence of regular success signals indicate that there is an issue that needs to be fixed. By ensuring that the system regularly reports success, any deviation from this expected behavior is a clear signal to take corrective action, simplifying the detection logic.
 - Why would we want to self-terminate, instead of handling the error immediately in the "primary" (as opposed to deferring it to the backup as it "spins up")?
+
 The primary reason for self-terminating is that by doing this we know what the outcome of the error will be, and we can be systematic about how we handle errors. Its also important to handle the errors with as little complexity as possible, so a reboot will in most cases be enough. 
 - Is there any reason to prefer a process pair style, as opposed to making a separate supervisor-like program whose sole purpose is to restart the main program?
+
 This approach allows the application to run continuously when an error occurs as the backup will take over while the primary restarts. A supervisor-like program would need some time to restart the main program and get things running again.
 
 ---
