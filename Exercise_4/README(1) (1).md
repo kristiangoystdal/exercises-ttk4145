@@ -18,7 +18,7 @@ Some engineering questions, before you continue:
 
 - Why would we aim to detect success in results, instead of the more classical way of detecting errors/failures?
 - Why would we want to self-terminate, instead of handling the error immediately in the "primary" (as opposed to deferring it to the backup as it "spins up")?
-The primary reason for self-terminating is that by doing this we know what the outcome of the error will be, and we can be systematic about how we handle errors. Its also important to handle the errors with as little complexity as possible, so a reboot of the node will in most cases be enough.
+The primary reason for self-terminating is that by doing this we know what the outcome of the error will be, and we can be systematic about how we handle errors. Its also important to handle the errors with as little complexity as possible, so a reboot will in most cases be enough. 
 - Is there any reason to prefer a process pair style, as opposed to making a separate supervisor-like program whose sole purpose is to restart the main program?
 
 ---
