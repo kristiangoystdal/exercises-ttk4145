@@ -1,27 +1,36 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"os/exec"
 	"Exercise_4/pack"
+	"fmt"
+	"os/exec"
 )
 
+var number int
+
+func becomeMaster() {
+	cmd := exec.Command("cmd", "/c", "start", "cmd", "/k", "set TERMINAL_ID=2 && main.exe")
+	if err := cmd.Run(); err != nil {
+		panic(err)
+	}
+	pack.Broadcast(number)
+}
+
 func main() {
-	// Set an environment variable for the main terminal ID
-	os.Setenv("TERMINAL_ID", "1")
-	fmt.Println("Running in terminal ID 1")
+	number = 0
 
-	// Prepare to start a new terminal with a different terminal ID
-    if(os.Getenv("TERMINAL_ID")=="1"){
-        cmd := exec.Command("cmd", "/c", "start", "cmd", "/k", "set TERMINAL_ID=2 && C:\\Users\\krisg\\OneDrive - NTNU\\2024 Vår\\Sanntidsprogrammering\\exercises-ttk4145\\Exercise_4\\kristian\\main.exe")
-        if err := cmd.Run(); err != nil {
-            panic(err)
-        }
-    }
-	
+	// The ListenForMaster function is expected to be blocking and return when it's time to switch roles.
+	// It also returns the last number received, which should be used if this instance becomes the master.
+	slave, receivedNumber := pack.ListenForMaster()
 
-	// If pack.Program() needs to wait or you have more code that depends on it, adjust accordingly
-	// For demonstration, we directly call pack.Program() after initiating the new terminal to show terminal ID 1 usage
-	pack.Program()
+	if slave {
+		fmt.Println("Operating as slave, received last number:", receivedNumber)
+		// This instance continues as a slave unless ListenForMaster indicated it's time to switch roles.
+		// The logic to switch roles would be inside ListenForMaster based on timeout/no messages received.
+	} else {
+		// If we're here, it means no master was detected or the master stopped broadcasting.
+		number = receivedNumber
+		fmt.Printf("Assuming master role with initial number: %d\n", number)
+		becomeMaster()
+	}
 }
