@@ -76,6 +76,8 @@ func SetStopLamp(value bool) {
 
 
 
+
+
 func PollButtons(receiver chan<- ButtonEvent) {
 	prev := make([][3]bool, _numFloors)
 	for {
@@ -196,4 +198,20 @@ func toBool(a byte) bool {
 		b = true
 	}
 	return b
+}
+
+func MoveTowardsFloor(floor_order int){
+	fmt.Printf("FUnc")
+	var current_floor = GetFloor()
+	fmt.Printf("Current Floor: %d", current_floor)
+    if floor_order == current_floor {
+        SetMotorDirection(MD_Stop)
+        fmt.Println("Stop")
+    } else if floor_order < current_floor{
+		SetMotorDirection(MD_Down)
+		fmt.Println("Down")
+	} else if floor_order > current_floor{
+		SetMotorDirection(MD_Up)
+		fmt.Println("Up")
+	}
 }
