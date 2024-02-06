@@ -23,7 +23,7 @@ func Broadcast(number int) {
 	newNumber := number
 	time.Sleep(time.Second)
 	for {
-
+		fmt.Printf("Broadcasting %v\n", newNumber)
 		_, err := conn.Write([]byte(strconv.Itoa(newNumber)))
 		if err != nil {
 			panic(err)
@@ -34,6 +34,5 @@ func Broadcast(number int) {
 }
 
 func Counter(a int) int {
-	fmt.Println(a)
 	return a + 1
 }

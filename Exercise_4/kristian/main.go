@@ -9,7 +9,7 @@ import (
 var number int
 
 func becomeMaster() {
-	cmd := exec.Command("cmd", "/c", "start", "cmd", "/k", "set TERMINAL_ID=2 && main.exe")
+	cmd := exec.Command("cmd", "/c", "start", "cmd", "/k", "main.exe")
 	if err := cmd.Run(); err != nil {
 		panic(err)
 	}
