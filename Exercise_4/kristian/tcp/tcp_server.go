@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"net"
 )
@@ -21,10 +22,24 @@ func main() {
 			continue
 		}
 		fmt.Println("Connection established")
+
+		// Send message to client
 		_, err = conn.Write([]byte("Hello from Server!\n"))
 		if err != nil {
 			fmt.Println("Error sending message:", err)
+			conn.Close()
+			continue
 		}
+
+		// Wait for client's confirmation
+		response, err := bufio.NewReader(conn).ReadString('\n')
+		if err != nil {
+			fmt.Println("Error reading confirmation from client:", err)
+			conn.Close()
+			continue
+		}
+		fmt.Printf("Client says: %s", response)
+
 		conn.Close()
 	}
 }
