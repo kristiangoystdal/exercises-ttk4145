@@ -24,6 +24,7 @@ func consumer(buffer chan int) {
 		fmt.Printf("[consumer]: %d\n", i)
 		time.Sleep(50 * time.Millisecond)
 	}
+
 }
 
 func main() {
