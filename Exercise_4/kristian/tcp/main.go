@@ -12,7 +12,7 @@ func becomeMaster() {
 	pack.Broadcast(number)
 }
 
-func main() {
+func main1() {
 	number = 0
 
 	// The ListenForMaster function is expected to be blocking and return when it's time to switch roles.
