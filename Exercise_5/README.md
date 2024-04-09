@@ -256,16 +256,26 @@ You do not have to answer every question in turn, as long as you address the con
 - Condition variables, Java monitors, and Ada protected objects are quite similar in what they do (temporarily yield execution so some other task can unblock us).
   - But in what ways do these mechanisms differ?
 
+Answer: Condtion variables use mutex locks to protect objects, while Java locks a monitor so no other thread can lock this until its been released by the first thread. Ada does this too, but at the same time makes sure that only one thread at a time can write while multiple can read. 
+
 - Bugs in this kind of low-level synchronization can be hard to spot.
   - Which solutions are you most confident are correct?
+Answer: Condvar 
   - Why, and what does this say about code quality?
+Answer: It was easier to understand and therefore we can more cofficiently say that we believe that its the most correct solution.
+
 
 - We operated only with two priority levels here, but it makes sense for this "kind" of priority resource to support more priorities.
   - How would you extend these solutions to N priorities? Is it even possible to do this elegantly?
+Answer: Expanding to N priorities involves adjusting synchronization mechanisms, possibly using priority queues or multiple condition variables. 
   - What (if anything) does that say about code quality?
+Answer: This requirement reveals a scalability limitation, and addressing it would enhance code quality by improving adaptability.
 
 - In D's standard library, `getValue` for semaphores is not even exposed (probably because it is not portable – Windows semaphores don't have `getValue`, though you could hack it together with `ReleaseSemaphore()` and `WaitForSingleObject()`).
   - A leading question: Is using `getValue` ever appropriate?
+Answer: Yes, if you don't need a reliable code and the value from getValue is not important.
   - Explain your intuition: What is it that makes `getValue` so dubious?
+Answer: The value from getValue can be changed right after the function is called leading to the getValue value being outdated.
 
 - Which one(s) of these different mechanisms do you prefer, both for this specific task and in general? (This is a matter of taste – there are no "right" answers here)
+Answer: Projected object
